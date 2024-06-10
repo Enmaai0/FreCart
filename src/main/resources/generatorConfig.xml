@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <classPathEntry location="/Users/21972/.m2\repository/com/mysql/mysql-connector-j/8.3.0/mysql-connector-j-8.3.0.jar" />
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/hao_mall?zeroDateTimeBehavior=CONVERT_TO_NULL"
+                        userId="root"
+                        password="Enmaai11">
+        </jdbcConnection>
+
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="icu/hao/haomall/model/pojo" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mappers"  targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="icu/hao/haomall/model/dao"  targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <table tableName="hao_mall_cart" domainObjectName="Customer" >
+
+        </table>
+        <table tableName="hao_mall_category" domainObjectName="Customer" >
+
+        </table>
+        <table tableName="hao_mall_order" domainObjectName="Customer" >
+
+        </table>
+        <table tableName="hao_mall_order_item" domainObjectName="Customer" >
+
+        </table>
+        <table tableName="hao_mall_product" domainObjectName="Customer" >
+
+        </table>
+        <table tableName="hao_mall_user" domainObjectName="Customer" >
+
+        </table>
+
+    </context>
+</generatorConfiguration>
