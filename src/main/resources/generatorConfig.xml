@@ -17,7 +17,7 @@
             <property name="forceBigDecimals" value="false" />
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="icu/hao/haomall/model/pojo" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="icu.hao.haomall.model.pojo" targetProject="src/main/java">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
@@ -26,27 +26,34 @@
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="icu/hao/haomall/model/dao"  targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="icu.hao.haomall.model.dao"  targetProject="src/main/java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table tableName="hao_mall_cart" domainObjectName="Customer" >
+        <table tableName="hao_mall_cart" domainObjectName="Cart"
+               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" selectByExampleQueryId="false">
+        </table>
+        <table tableName="hao_mall_category" domainObjectName="Category"
+               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" selectByExampleQueryId="false">
+        </table>
+        <table tableName="hao_mall_order" domainObjectName="Order"
+               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" selectByExampleQueryId="false">
 
         </table>
-        <table tableName="hao_mall_category" domainObjectName="Customer" >
-
+        <table tableName="hao_mall_order_item" domainObjectName="OrderItem"
+               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" selectByExampleQueryId="false">
         </table>
-        <table tableName="hao_mall_order" domainObjectName="Customer" >
-
+        <table tableName="hao_mall_product" domainObjectName="Product"
+               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" selectByExampleQueryId="false">
         </table>
-        <table tableName="hao_mall_order_item" domainObjectName="Customer" >
-
-        </table>
-        <table tableName="hao_mall_product" domainObjectName="Customer" >
-
-        </table>
-        <table tableName="hao_mall_user" domainObjectName="Customer" >
-
+        <table tableName="hao_mall_user" domainObjectName="User"
+               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false" selectByExampleQueryId="false">
         </table>
 
     </context>
