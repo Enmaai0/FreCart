@@ -1,5 +1,7 @@
 package icu.hao.haomall.requests;
 
+import org.apache.logging.log4j.core.config.plugins.validation.constraints.NotBlank;
+
 public class AddCategoryResquest {
     private String name;
     private Integer type;
