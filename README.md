@@ -1,4 +1,4 @@
-# _Global Exception Handler_ / _全局异常处理器_
+# Global Exception Handler / 全局异常处理器
 
 In the `GlobalExceptionHandler` class, I added a new `@ExceptionHandler` method to handle the `MethodArgumentNotValidException` exception. This method uses the `@ResponseBody` annotation to return a response body containing error messages, making it easier for clients to retrieve exception details. The implementation uses the `BindingResult` interface to get validation error messages and returns them to the client.
 
