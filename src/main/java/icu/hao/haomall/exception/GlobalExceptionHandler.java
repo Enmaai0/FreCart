@@ -3,9 +3,15 @@ package icu.hao.haomall.exception;
 import icu.hao.haomall.common.ApiRestResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -23,4 +29,27 @@ public class GlobalExceptionHandler {
         log.error("Exception", e);
         return ApiRestResponse.error(e.getCode(), e.getMessage());
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseBody
+    public ApiRestResponse handleMethodArgNotValidException(MethodArgumentNotValidException e) {
+        log.error("MethodArgumentNotValidException", e);
+        return handleBindingResult(e.getBindingResult());
+    }
+
+    private ApiRestResponse handleBindingResult(BindingResult bindingResult) {
+        List<String> messages = new ArrayList<>();
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            for (ObjectError error : allErrors) {
+                String defaultMessage = error.getDefaultMessage();
+                messages.add(defaultMessage);
+            }
+        }
+        if (messages.isEmpty()) {
+            return ApiRestResponse.error(ExceptionEnum.Request_Param_Error);
+        }
+        return ApiRestResponse.error(ExceptionEnum.Request_Param_Error.getCode(), messages.toString());
+    }
+
 }

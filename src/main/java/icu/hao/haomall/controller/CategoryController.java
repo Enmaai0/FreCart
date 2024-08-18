@@ -9,6 +9,7 @@ import icu.hao.haomall.requests.AddCategoryResquest;
 import icu.hao.haomall.service.CategoryService;
 import icu.hao.haomall.service.UserService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -24,13 +25,7 @@ public class CategoryController {
     CategoryService categoryService;
     @PostMapping("admin/category/add")
     @ResponseBody
-    public ApiRestResponse addCategory(HttpSession session, @RequestBody AddCategoryResquest addCategoryReq) {
-        if (addCategoryReq.getName() == null ||
-                addCategoryReq.getType() == null ||
-                addCategoryReq.getParentId() == null ||
-                addCategoryReq.getOrderNum() == null) {
-            return ApiRestResponse.error(ExceptionEnum.PARA_NOT_NULL);
-        }
+    public ApiRestResponse addCategory(HttpSession session, @Valid @RequestBody AddCategoryResquest addCategoryReq) {
         User curUser = (User) session.getAttribute(Constant.HAOMALL_USER);
         if (curUser == null) return ApiRestResponse.error(ExceptionEnum.NEED_LOGIN);
         boolean isAdmin = userService.isAdmin(curUser);

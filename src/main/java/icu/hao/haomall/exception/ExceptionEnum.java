@@ -11,6 +11,7 @@ public enum ExceptionEnum {
     UPDATE_FAILED(10008,"Update failed"),
     NEED_ADMIN(10009, "Need admin"),
     PARA_NOT_NULL(10010, "Params cannot be null"),
+    Request_Param_Error(10011, "Faulty param"),
     SYSTEM_ERROR(20000, "System error");
 
     Integer code;
