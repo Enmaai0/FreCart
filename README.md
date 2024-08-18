@@ -31,4 +31,4 @@ In this feature branch, I implemented the functionality to add a new category in
    }
    
 ##   Code Implementation / 代码实现
-### Here is the implementation of the addCategory method in the CategoryController:
+** Here is the implementation of the addCategory method in the CategoryController:**
