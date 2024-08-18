@@ -1,4 +1,4 @@
-# FreFood
+# FreCart
 
 Welcome to FreCart, your go-to fresh food store! This project aims to provide a comprehensive platform for sourcing, purchasing, and delivering fresh produce and groceries. 
 
