@@ -55,4 +55,8 @@ public ApiRestResponse addCategory(HttpSession session, AddCategoryRequest addCa
         return ApiRestResponse.error(ExceptionEnum.NEED_ADMIN);
     }
     return ApiRestResponse.success();
-}
+   }
+   ## Conclusion / 结论
+   This feature enhances the category management capabilities of the application by allowing authorized users to add new categories securely. The use of a dedicated request class not only improves code readability but also enhances security by limiting the input parameters to only those necessary for the operation.
+
+该特性通过允许授权用户安全地添加新类别，增强了应用程序的类别管理能力。使用专用请求类不仅提高了代码可读性，还通过限制输入参数仅限于操作所需的参数来增强安全性。
