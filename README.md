@@ -31,4 +31,28 @@ In this feature branch, I implemented the functionality to add a new category in
    }
    
 ##   Code Implementation / 代码实现
-** Here is the implementation of the addCategory method in the CategoryController:**
+**Here is the implementation of the addCategory method in the CategoryController:**
+@PostMapping("admin/category/add")
+@ResponseBody
+public ApiRestResponse addCategory(HttpSession session, AddCategoryRequest addCategoryReq) {
+    // Validate request parameters
+    if (addCategoryReq.getName() == null ||
+            addCategoryReq.getType() == null ||
+            addCategoryReq.getParentId() == null ||
+            addCategoryReq.getOrderNum() == null) {
+        return ApiRestResponse.error(ExceptionEnum.PARA_NOT_NULL);
+    }
+    
+    // Check user session
+    User curUser = (User) session.getAttribute(Constant.HAOMALL_USER);
+    if (curUser == null) return ApiRestResponse.error(ExceptionEnum.NEED_LOGIN);
+    
+    // Check admin privileges
+    boolean isAdmin = userService.isAdmin(curUser);
+    if (isAdmin) {
+        categoryService.add(addCategoryReq);
+    } else {
+        return ApiRestResponse.error(ExceptionEnum.NEED_ADMIN);
+    }
+    return ApiRestResponse.success();
+}
