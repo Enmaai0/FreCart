@@ -27,4 +27,18 @@ public class CategoryServiceImpl implements CategoryService {
             throw new Exception(ExceptionEnum.INSERT_FAILED);
         }
     }
+
+    @Override
+    public void update(Category updateCategoryRequest) {
+        if (updateCategoryRequest.getName() != null) {
+            Category category_old = categoryMapper.selectByName(updateCategoryRequest.getName());
+            if (category_old != null && !category_old.getId().equals(updateCategoryRequest.getId())) {
+                throw new Exception(ExceptionEnum.NAME_EXISTED);
+            }
+        }
+        int count = categoryMapper.updateByPrimaryKeySelective(updateCategoryRequest);
+        if (count == 0) {
+            throw new Exception(ExceptionEnum.UPDATE_FAILED);
+        }
+    }
 }

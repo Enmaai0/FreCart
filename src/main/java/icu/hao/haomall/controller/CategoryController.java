@@ -4,12 +4,15 @@ import icu.hao.haomall.common.ApiRestResponse;
 import icu.hao.haomall.common.Constant;
 import icu.hao.haomall.exception.Exception;
 import icu.hao.haomall.exception.ExceptionEnum;
+import icu.hao.haomall.model.pojo.Category;
 import icu.hao.haomall.model.pojo.User;
 import icu.hao.haomall.requests.AddCategoryResquest;
+import icu.hao.haomall.requests.UpdateCategoryRequest;
 import icu.hao.haomall.service.CategoryService;
 import icu.hao.haomall.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -31,6 +34,22 @@ public class CategoryController {
         boolean isAdmin = userService.isAdmin(curUser);
         if (isAdmin) {
             categoryService.add(addCategoryReq);
+        } else {
+            ApiRestResponse.error(ExceptionEnum.NEED_ADMIN);
+        }
+        return ApiRestResponse.sucess();
+    }
+
+    @PostMapping("admin/category/update")
+    @ResponseBody
+    public ApiRestResponse updateCategory(HttpSession session, @Valid @RequestBody UpdateCategoryRequest updateCategoryRequest) {
+        User curUser = (User) session.getAttribute(Constant.HAOMALL_USER);
+        if (curUser == null) return ApiRestResponse.error(ExceptionEnum.NEED_LOGIN);
+        boolean isAdmin = userService.isAdmin(curUser);
+        if (isAdmin) {
+            Category category = new Category();
+            BeanUtils.copyProperties(updateCategoryRequest, category);
+            categoryService.update(category);
         } else {
             ApiRestResponse.error(ExceptionEnum.NEED_ADMIN);
         }
