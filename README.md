@@ -55,19 +55,19 @@
 为了确保 AdminFilter 可以在指定url下正常使用，配置如下：
 
 To ensure AdminFilter is properly registered, configure it as follows:
-    ```java
-    @Configuration
-    public class AdminFilterConfig {
-        @Bean
-        public AdminFilter adminFilter() {
-            return new AdminFilter();
-        }
-    
-        @Bean
-        public FilterRegistrationBean<AdminFilter> adminFilterConfiguration() {
-            FilterRegistrationBean<AdminFilter> filterRegistrationBean = new FilterRegistrationBean<>();
-            filterRegistrationBean.setFilter(adminFilter());
-            filterRegistrationBean.addUrlPatterns("/admin/category/*", "/admin/product/*", "/admin/order/*");
-            return filterRegistrationBean;
-        }
+```java
+@Configuration
+public class AdminFilterConfig {
+    @Bean
+    public AdminFilter adminFilter() {
+        return new AdminFilter();
     }
+
+    @Bean
+    public FilterRegistrationBean<AdminFilter> adminFilterConfiguration() {
+        FilterRegistrationBean<AdminFilter> filterRegistrationBean = new FilterRegistrationBean<>();
+        filterRegistrationBean.setFilter(adminFilter());
+        filterRegistrationBean.addUrlPatterns("/admin/category/*", "/admin/product/*", "/admin/order/*");
+        return filterRegistrationBean;
+    }
+}
