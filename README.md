@@ -55,6 +55,7 @@ public class AdminFilter implements Filter {
 为了确保 AdminFilter 可以在指定url下正常使用，配置如下：
 
 To ensure AdminFilter is properly registered, configure it as follows:
+```java
 @Configuration
 public class AdminFilterConfig {
     @Bean
