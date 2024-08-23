@@ -55,4 +55,10 @@ public class CategoryController {
         }
         return ApiRestResponse.sucess();
     }
+
+    @PostMapping("admin/category/delete")
+    @ResponseBody
+    public ApiRestResponse deleteCategory() {
+        return null;
+    }
 }

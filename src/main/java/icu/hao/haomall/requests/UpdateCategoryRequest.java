@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class UpdateCategoryRequest {
+
+
     @NotNull(message = "id cannot be empty")
     private Integer id;
     @NotNull
@@ -21,7 +23,9 @@ public class UpdateCategoryRequest {
     public String getName() {
         return name;
     }
+    public Integer getId() { return id; }
 
+    public void setId(Integer id) { this.id = id; }
     public void setName(String name) {
         this.name = name;
     }
