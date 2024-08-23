@@ -1,29 +1,72 @@
-# Global Exception Handler / 全局异常处理器
+# AdminFilter
 
-In the `GlobalExceptionHandler` class, we added a new `@ExceptionHandler` method to handle the `MethodArgumentNotValidException` exception. This method uses the `@ResponseBody` annotation to return a response body containing error messages, making it easier for clients to retrieve exception details. The implementation uses the `BindingResult` interface to get validation error messages and returns them to the client.
+`AdminFilter` 是关于管理员路由的 Servlet 过滤器。确保只有登录的管理员用户才能访问指定的接口。
 
-在 `GlobalExceptionHandler` 类中，我们添加了一个新的 `@ExceptionHandler` 方法，用于处理 `MethodArgumentNotValidException` 类的异常。该方法使用 `@ResponseBody` 注解，以便返回一个包含错误信息的响应主体，方便客户端获取异常信息。具体实现中，我们使用 `BindingResult` 接口来获取验证错误信息，并将这些信息返回给客户端。
+`AdminFilter` is a Servlet filter designed to protect admin routes. It ensures that only logged-in administrator users can access specified admin backend endpoints.
 
 ## Example Code / 示例代码
 ```java
-@ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseBody
-    public ApiRestResponse handleMethodArgNotValidException(MethodArgumentNotValidException e) {
-        log.error("MethodArgumentNotValidException", e);
-        return handleBindingResult(e.getBindingResult());
+@Component
+@WebFilter(urlPatterns = { "/admin/category/*", "/admin/product/*", "/admin/order/*" })
+public class AdminFilter implements Filter {
+    @Autowired
+    UserService userService;
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
     }
 
-    private ApiRestResponse handleBindingResult(BindingResult bindingResult) {
-        List<String> messages = new ArrayList<>();
-        if (bindingResult.hasErrors()) {
-            List<ObjectError> allErrors = bindingResult.getAllErrors();
-            for (ObjectError error : allErrors) {
-                String defaultMessage = error.getDefaultMessage();
-                messages.add(defaultMessage);
-            }
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpSession session = request.getSession();
+        User curUser = (User) session.getAttribute(Constant.HAOMALL_USER);
+        
+        PrintWriter writer = servletResponse.getWriter();
+        if (curUser == null) {
+            writer.write("{\n" +
+                    "    \"status\": 10007,\n" +
+                    "    \"message\": \"NEED_LOGIN\",\n" +
+                    "    \"data\": null\n" +
+                    "}");
+            writer.flush();
+            return;
         }
-        if (messages.isEmpty()) {
-            return ApiRestResponse.error(ExceptionEnum.Request_Param_Error);
+
+        boolean isAdmin = userService.isAdmin(curUser);
+        if (isAdmin) {
+            filterChain.doFilter(servletRequest, servletResponse);
+        } else {
+            writer.write("{\n" +
+                    "    \"status\": 10009,\n" +
+                    "    \"message\": \"NEED_ADMIN\",\n" +
+                    "    \"data\": null\n" +
+                    "}");
+            writer.flush();
         }
-        return ApiRestResponse.error(ExceptionEnum.Request_Param_Error.getCode(), messages.toString());
     }
+
+    @Override
+    public void destroy() {
+    }
+}
+
+# AdminFilterConfig
+为了确保 AdminFilter 可以在指定url下正常使用，配置如下：
+
+To ensure AdminFilter is properly registered, configure it as follows:
+@Configuration
+public class AdminFilterConfig {
+    @Bean
+    public AdminFilter adminFilter() {
+        return new AdminFilter();
+    }
+
+    @Bean
+    public FilterRegistrationBean<AdminFilter> adminFilterConfiguration() {
+        FilterRegistrationBean<AdminFilter> filterRegistrationBean = new FilterRegistrationBean<>();
+        filterRegistrationBean.setFilter(adminFilter());
+        filterRegistrationBean.addUrlPatterns("/admin/category/*", "/admin/product/*", "/admin/order/*");
+        return filterRegistrationBean;
+    }
+}
