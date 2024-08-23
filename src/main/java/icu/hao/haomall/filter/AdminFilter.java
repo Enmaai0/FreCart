@@ -30,8 +30,8 @@ public class AdminFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpSession session = request.getSession();
         User curUser = (User) session.getAttribute(Constant.HAOMALL_USER);
-        PrintWriter writer = new HttpServletResponseWrapper((HttpServletResponse) servletResponse).getWriter();
         if (curUser == null) {
+            PrintWriter writer = new HttpServletResponseWrapper((HttpServletResponse) servletResponse).getWriter();
             writer.write("{\n" +
                     "    \"status\": 10007,\n" +
                     "    \"message\": \"NEED_LOGIN\",\n" +
@@ -45,6 +45,7 @@ public class AdminFilter implements Filter {
         if (isAdmin) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
+            PrintWriter writer = new HttpServletResponseWrapper((HttpServletResponse) servletResponse).getWriter();
             writer.write("{\n" +
                     "    \"status\": 10009,\n" +
                     "    \"message\": \"NEED_ADMIN\",\n" +

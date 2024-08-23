@@ -29,30 +29,16 @@ public class CategoryController {
     @PostMapping("admin/category/add")
     @ResponseBody
     public ApiRestResponse addCategory(HttpSession session, @Valid @RequestBody AddCategoryResquest addCategoryReq) {
-        User curUser = (User) session.getAttribute(Constant.HAOMALL_USER);
-        if (curUser == null) return ApiRestResponse.error(ExceptionEnum.NEED_LOGIN);
-        boolean isAdmin = userService.isAdmin(curUser);
-        if (isAdmin) {
-            categoryService.add(addCategoryReq);
-        } else {
-            ApiRestResponse.error(ExceptionEnum.NEED_ADMIN);
-        }
+        categoryService.add(addCategoryReq);
         return ApiRestResponse.sucess();
     }
 
     @PostMapping("admin/category/update")
     @ResponseBody
     public ApiRestResponse updateCategory(HttpSession session, @Valid @RequestBody UpdateCategoryRequest updateCategoryRequest) {
-        User curUser = (User) session.getAttribute(Constant.HAOMALL_USER);
-        if (curUser == null) return ApiRestResponse.error(ExceptionEnum.NEED_LOGIN);
-        boolean isAdmin = userService.isAdmin(curUser);
-        if (isAdmin) {
-            Category category = new Category();
-            BeanUtils.copyProperties(updateCategoryRequest, category);
-            categoryService.update(category);
-        } else {
-            ApiRestResponse.error(ExceptionEnum.NEED_ADMIN);
-        }
+        Category category = new Category();
+        BeanUtils.copyProperties(updateCategoryRequest, category);
+        categoryService.update(category);
         return ApiRestResponse.sucess();
     }
 
