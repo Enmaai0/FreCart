@@ -17,33 +17,34 @@
     
         @Override
         public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-            HttpServletRequest request = (HttpServletRequest) servletRequest;
-            HttpSession session = request.getSession();
-            User curUser = (User) session.getAttribute(Constant.HAOMALL_USER);
-            
-            PrintWriter writer = servletResponse.getWriter();
-            if (curUser == null) {
-                writer.write("{\n" +
-                        "    \"status\": 10007,\n" +
-                        "    \"message\": \"NEED_LOGIN\",\n" +
-                        "    \"data\": null\n" +
-                        "}");
-                writer.flush();
-                return;
-            }
-    
-            boolean isAdmin = userService.isAdmin(curUser);
-            if (isAdmin) {
-                filterChain.doFilter(servletRequest, servletResponse);
-            } else {
-                writer.write("{\n" +
-                        "    \"status\": 10009,\n" +
-                        "    \"message\": \"NEED_ADMIN\",\n" +
-                        "    \"data\": null\n" +
-                        "}");
-                writer.flush();
-            }
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        HttpSession session = request.getSession();
+        User curUser = (User) session.getAttribute(Constant.HAOMALL_USER);
+        if (curUser == null) {
+            PrintWriter writer = new HttpServletResponseWrapper((HttpServletResponse) servletResponse).getWriter();
+            writer.write("{\n" +
+                    "    \"status\": 10007,\n" +
+                    "    \"message\": \"NEED_LOGIN\",\n" +
+                    "    \"data\": null\n" +
+                    "}");
+            writer.flush();
+            writer.close();
+            return;
         }
+        boolean isAdmin = userService.isAdmin(curUser);
+        if (isAdmin) {
+            filterChain.doFilter(servletRequest, servletResponse);
+        } else {
+            PrintWriter writer = new HttpServletResponseWrapper((HttpServletResponse) servletResponse).getWriter();
+            writer.write("{\n" +
+                    "    \"status\": 10009,\n" +
+                    "    \"message\": \"NEED_ADMIN\",\n" +
+                    "    \"data\": null\n" +
+                    "}");
+            writer.flush();
+            writer.close();
+        }
+    }
     
         @Override
         public void destroy() {
