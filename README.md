@@ -5,7 +5,6 @@
 `AdminFilter` is a Servlet filter designed to protect admin routes. It ensures that only logged-in administrator users can access specified admin backend endpoints.
 
 ## Example Code / 示例代码
- ```java
     @Component
     @WebFilter(urlPatterns = { "/admin/category/*", "/admin/product/*", "/admin/order/*" })
     public class AdminFilter implements Filter {
