@@ -47,9 +47,9 @@ public class GlobalExceptionHandler {
             }
         }
         if (messages.isEmpty()) {
-            return ApiRestResponse.error(ExceptionEnum.Request_Param_Error);
+            return ApiRestResponse.error(ExceptionEnum.RRQUEST_PARAM_ERROR);
         }
-        return ApiRestResponse.error(ExceptionEnum.Request_Param_Error.getCode(), messages.toString());
+        return ApiRestResponse.error(ExceptionEnum.RRQUEST_PARAM_ERROR.getCode(), messages.toString());
     }
 
 }

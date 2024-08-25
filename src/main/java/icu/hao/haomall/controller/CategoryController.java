@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -28,14 +29,14 @@ public class CategoryController {
     CategoryService categoryService;
     @PostMapping("admin/category/add")
     @ResponseBody
-    public ApiRestResponse addCategory(HttpSession session, @Valid @RequestBody AddCategoryResquest addCategoryReq) {
+    public ApiRestResponse addCategory(@Valid @RequestBody AddCategoryResquest addCategoryReq) {
         categoryService.add(addCategoryReq);
         return ApiRestResponse.sucess();
     }
 
     @PostMapping("admin/category/update")
     @ResponseBody
-    public ApiRestResponse updateCategory(HttpSession session, @Valid @RequestBody UpdateCategoryRequest updateCategoryRequest) {
+    public ApiRestResponse updateCategory(@Valid @RequestBody UpdateCategoryRequest updateCategoryRequest) {
         Category category = new Category();
         BeanUtils.copyProperties(updateCategoryRequest, category);
         categoryService.update(category);
@@ -44,7 +45,8 @@ public class CategoryController {
 
     @PostMapping("admin/category/delete")
     @ResponseBody
-    public ApiRestResponse deleteCategory() {
-        return null;
+    public ApiRestResponse deleteCategory(@RequestParam Integer id) {
+        categoryService.delete(id);
+        return ApiRestResponse.sucess();
     }
 }
