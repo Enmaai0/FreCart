@@ -46,9 +46,9 @@ Create the CachingConfig class to configure Redis as the cache manager:
 
 * RedisCacheManager：用于管理 Redis 缓存。
 
-RedisCacheManager: Used to manage Redis cache.
+* RedisCacheManager: Used to manage Redis cache.
 
-entryTtl：设置缓存的有效时间，这里为 30 秒。
+* entryTtl：设置缓存的有效时间，这里为 30 秒。
 
-entryTtl: Sets the cache expiration time, here it is 30 seconds.
+* entryTtl: Sets the cache expiration time, here it is 30 seconds.
 
