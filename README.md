@@ -29,19 +29,19 @@ Add the @EnableCaching annotation on the main application entry class to enable 
 
 Create the CachingConfig class to configure Redis as the cache manager:
 
-      @Configuration
-      @EnableCaching
-      public class CachingConfig {
-          @Bean
-          public RedisCacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory) {
-              RedisCacheWriter redisCacheWriter = RedisCacheWriter.lockingRedisCacheWriter(redisConnectionFactory);
-              RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig();
-              redisCacheConfiguration = redisCacheConfiguration.entryTtl(Duration.ofSeconds(30));
-      
-              RedisCacheManager redisCacheManager = new RedisCacheManager(redisCacheWriter, redisCacheConfiguration);
-              return redisCacheManager;
-          }
+  @Configuration
+  @EnableCaching
+  public class CachingConfig {
+      @Bean
+      public RedisCacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory) {
+          RedisCacheWriter redisCacheWriter = RedisCacheWriter.lockingRedisCacheWriter(redisConnectionFactory);
+          RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig();
+          redisCacheConfiguration = redisCacheConfiguration.entryTtl(Duration.ofSeconds(30));
+  
+          RedisCacheManager redisCacheManager = new RedisCacheManager(redisCacheWriter, redisCacheConfiguration);
+          return redisCacheManager;
       }
+  }
 
 * RedisCacheManager：用于管理 Redis 缓存。
 
