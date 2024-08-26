@@ -29,7 +29,6 @@ Add the @EnableCaching annotation on the main application entry class to enable 
 
 Create the CachingConfig class to configure Redis as the cache manager:
 
-    ```java
       @Configuration
       @EnableCaching
       public class CachingConfig {
