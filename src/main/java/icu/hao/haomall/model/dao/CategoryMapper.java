@@ -3,6 +3,8 @@ package icu.hao.haomall.model.dao;
 import icu.hao.haomall.model.pojo.Category;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CategoryMapper {
     /**
@@ -54,4 +56,7 @@ public interface CategoryMapper {
     int updateByPrimaryKey(Category row);
 
     Category selectByName(String name);
+
+    List<Category> selectList();
+    List<Category> selectByParentId(Integer parentId);
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.mvc.condition.RequestConditionHolder;
 
@@ -16,6 +17,7 @@ import java.util.List;
 
 @SpringBootApplication
 @MapperScan("icu.hao.haomall.model.dao")
+@EnableCaching
 public class HaoMallApplication {
     public static void main(String[] args) {
 

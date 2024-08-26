@@ -1,9 +1,11 @@
 package icu.hao.haomall.controller;
 
+import com.github.pagehelper.PageInfo;
 import icu.hao.haomall.common.ApiRestResponse;
 import icu.hao.haomall.common.Constant;
 import icu.hao.haomall.exception.Exception;
 import icu.hao.haomall.exception.ExceptionEnum;
+import icu.hao.haomall.model.VO.CategoryVO;
 import icu.hao.haomall.model.pojo.Category;
 import icu.hao.haomall.model.pojo.User;
 import icu.hao.haomall.requests.AddCategoryResquest;
@@ -16,10 +18,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class CategoryController {
@@ -48,5 +49,19 @@ public class CategoryController {
     public ApiRestResponse deleteCategory(@RequestParam Integer id) {
         categoryService.delete(id);
         return ApiRestResponse.sucess();
+    }
+
+    @GetMapping("admin/category/list")
+    @ResponseBody
+    public ApiRestResponse listCategoryForAdmin(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+        PageInfo pageInfo = categoryService.listForAdmin(pageNum, pageSize);
+        return ApiRestResponse.sucess(pageInfo);
+    }
+
+    @GetMapping("category/list")
+    @ResponseBody
+    public ApiRestResponse listCategoryForCustomer() {
+        List<CategoryVO> categoryVOS = categoryService.listCategoryForCustomer(0);
+        return ApiRestResponse.sucess(categoryVOS);
     }
 }
