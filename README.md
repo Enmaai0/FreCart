@@ -51,3 +51,36 @@ Create the CachingConfig class to configure Redis as the cache manager:
 
 * entryTtl: Sets the cache expiration time, here it is 30 seconds.
 
+### 4. 新增接口 / New Interface
+新增了一个获取分类列表的接口：
+
+A new interface to retrieve the category list has been added:
+
+        @GetMapping("category/list")
+        @ResponseBody
+        public ApiRestResponse listCategoryForCustomer() {
+            List<CategoryVO> categoryVOS = categoryService.listCategoryForCustomer(0);
+            return ApiRestResponse.sucess(categoryVOS);
+        }
+### 5. 使用缓存的服务方法 / Service Method Using Cache
+在 CategoryService 中使用 @Cacheable 注解，缓存分类列表：
+
+In the CategoryService, use the @Cacheable annotation to cache the category list:
+
+        @Override
+        @Cacheable(value = "listCategoryForCustomer")
+        public List<CategoryVO> listCategoryForCustomer(Integer parentId) {
+            List<Category> categories = categoryMapper.selectByParentId(parentId);
+            List<CategoryVO> categoryVOList = new ArrayList<>();
+            for (Category category : categories) {
+                CategoryVO categoryVO = new CategoryVO();
+                BeanUtils.copyProperties(category, categoryVO);
+                List<CategoryVO> subCategories = listCategoryForCustomer(category.getId());
+                categoryVO.setSubCategories(subCategories);
+                categoryVOList.add(categoryVO);
+            }
+            return categoryVOList;
+        }
+* @Cacheable：该注解用于标记需要缓存的服务方法，指定缓存的名称为 listCategoryForCustomer。
+* @Cacheable: This annotation is used to mark the service method that needs to be cached, specifying the cache name as listCategoryForCustomer.
+  
