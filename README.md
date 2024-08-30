@@ -7,7 +7,7 @@ I introduced Redis as a caching solution through Spring Data Redis and Spring Ca
 
 在 `pom.xml` 中添加了以下 Maven 依赖：  
 Added the following Maven dependencies in `pom.xml`:
-        ```xml
+
                 <dependency>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-data-redis</artifactId>
