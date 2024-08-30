@@ -8,15 +8,15 @@ I introduced Redis as a caching solution through Spring Data Redis and Spring Ca
 在 `pom.xml` 中添加了以下 Maven 依赖：  
 Added the following Maven dependencies in `pom.xml`:
         ```xml
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-data-redis</artifactId>
-</dependency>
-
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-cache</artifactId>
-</dependency>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-data-redis</artifactId>
+                </dependency>
+                
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-cache</artifactId>
+                </dependency>
 
 ### 2. 启用缓存 / Enable Caching
 在主应用程序的入口类上添加 @EnableCaching 注解，以启用 Spring Cache 功能：
