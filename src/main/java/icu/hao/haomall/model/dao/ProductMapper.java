@@ -52,4 +52,5 @@ public interface ProductMapper {
      * @mbg.generated Tue May 21 01:26:00 AEST 2024
      */
     int updateByPrimaryKey(Product row);
+    Product selectByName(String name);
 }
