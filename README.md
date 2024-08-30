@@ -82,6 +82,3 @@ In the CategoryService, use the @Cacheable annotation to cache the category list
         }
 * @Cacheable：该注解用于标记需要缓存的服务方法，指定缓存的名称为 listCategoryForCustomer。
 * @Cacheable: This annotation is used to mark the service method that needs to be cached, specifying the cache name as listCategoryForCustomer.
-
-<span style="color:red">This is red text.</span>
-  
