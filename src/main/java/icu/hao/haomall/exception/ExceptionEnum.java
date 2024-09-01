@@ -13,6 +13,8 @@ public enum ExceptionEnum {
     PARA_NOT_NULL(10010, "Params cannot be null"),
     RRQUEST_PARAM_ERROR(10011, "Faulty param"),
     DELETE_FAILED(10012, "Delete failed"),
+    MKDIR_FAILED(10013, "Failed to create directory"),
+    UPLOAD_FAILED(10014, "Failed to upload file"),
     SYSTEM_ERROR(20000, "System error");
 
     Integer code;

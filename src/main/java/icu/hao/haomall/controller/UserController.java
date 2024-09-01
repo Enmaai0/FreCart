@@ -94,7 +94,6 @@ public class UserController {
         } else {
             return ApiRestResponse.error(ExceptionEnum.NEED_ADMIN);
         }
-
     }
 
 }
