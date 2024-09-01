@@ -24,7 +24,41 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 The file upload endpoint handles the file upload request and saves the file to the specified directory. Upon successful upload, it returns a response containing the file URL.
 
-Endpoint
+接口信息 / Endpoint
 * URL: /admin/upload/file
 * Method: POST
 * Parameters: MultipartFile file
+
+Example
+```
+@PostMapping("/admin/upload/file")
+public ApiRestResponse upload(HttpServletRequest httpServletRequest, @RequestParam MultipartFile file) throws URISyntaxException {
+    String fileName = file.getOriginalFilename();
+    String suffix = fileName.substring(fileName.lastIndexOf("."));
+    UUID uuid = UUID.randomUUID();
+    String newFileName = uuid.toString() + suffix;
+    File fileDirectory = new File(Constant.uploadFileDir);
+    File destFile = new File(Constant.uploadFileDir + newFileName);
+    if (!fileDirectory.exists()) {
+        if (!fileDirectory.mkdir()) {
+            return ApiRestResponse.error(10013, "Failed to create directory");
+        }
+    }
+    try {
+        file.transferTo(destFile);
+    } catch (Exception e) {
+        return ApiRestResponse.error(10014, "Failed to upload file");
+    }
+    return ApiRestResponse.sucess(getHost(new URI(httpServletRequest.getRequestURL() + "")) + "/images/" + newFileName);
+}
+
+private URI getHost(URI uri) {
+    URI effectiveURI;
+    try {
+        effectiveURI = new URI(uri.getScheme(), uri.getUserInfo(), uri.getHost(), uri.getPort(), null, null, null);
+    } catch (Exception e) {
+        effectiveURI = null;
+    }
+    return effectiveURI;
+}
+```
