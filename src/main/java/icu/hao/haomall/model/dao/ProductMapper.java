@@ -1,6 +1,7 @@
 package icu.hao.haomall.model.dao;
 
 import icu.hao.haomall.model.pojo.Product;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -53,4 +54,5 @@ public interface ProductMapper {
      */
     int updateByPrimaryKey(Product row);
     Product selectByName(String name);
+    int batchUpdateSellStatus(@Param("ids") Integer[] ids, @Param("sellStatus") Integer sellStatus);
 }

@@ -52,4 +52,9 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    @Override
+    public void batchUpdateSellStatus(Integer[] ids, Integer sellStatus) {
+        productMapper.batchUpdateSellStatus(ids, sellStatus);
+    }
+
 }
