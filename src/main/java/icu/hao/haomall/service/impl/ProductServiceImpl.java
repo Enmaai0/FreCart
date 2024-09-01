@@ -27,4 +27,29 @@ public class ProductServiceImpl implements ProductService {
             throw new Exception(ExceptionEnum.INSERT_FAILED);
         }
     }
+
+    @Override
+    public void update(Product product) {
+        Product productOld = productMapper.selectByName(product.getName());
+        if (productOld != null && !productOld.getId().equals(product.getId())) {
+            throw new Exception(ExceptionEnum.NAME_EXISTED);
+        }
+        int count = productMapper.updateByPrimaryKeySelective(product);
+        if (count == 0) {
+            throw new Exception(ExceptionEnum.UPDATE_FAILED);
+        }
+    }
+
+    @Override
+    public void delete(Integer id) {
+        Product productOld = productMapper.selectByPrimaryKey(id);
+        if (productOld == null) {
+            throw new Exception(ExceptionEnum.DELETE_FAILED);
+        }
+        int count = productMapper.deleteByPrimaryKey(id);
+        if (count == 0) {
+            throw new Exception(ExceptionEnum.DELETE_FAILED);
+        }
+    }
+
 }
