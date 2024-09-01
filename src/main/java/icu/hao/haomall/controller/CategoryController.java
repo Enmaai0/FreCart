@@ -11,6 +11,7 @@ import icu.hao.haomall.model.pojo.User;
 import icu.hao.haomall.requests.AddCategoryResquest;
 import icu.hao.haomall.requests.UpdateCategoryRequest;
 import icu.hao.haomall.service.CategoryService;
+import icu.hao.haomall.service.ProductService;
 import icu.hao.haomall.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -64,4 +65,5 @@ public class CategoryController {
         List<CategoryVO> categoryVOS = categoryService.listCategoryForCustomer(0);
         return ApiRestResponse.sucess(categoryVOS);
     }
+
 }
