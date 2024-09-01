@@ -9,12 +9,12 @@
 
 `WebMvcConfig` is a Spring Configuration class that defines how static resources should be handled. It maps resources under `/images/**` to the physical path in the file system.
 
-```java
-        @Configuration
-        public class WebMvcConfig implements WebMvcConfigurer {
-            @Override
-            public void addResourceHandlers(ResourceHandlerRegistry registry) {
-                registry.addResourceHandler("/images/**").addResourceLocations("file:" + Constant.uploadFileDir);
-            }
-        }
+        ```java
+                @Configuration
+                public class WebMvcConfig implements WebMvcConfigurer {
+                    @Override
+                    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+                        registry.addResourceHandler("/images/**").addResourceLocations("file:" + Constant.uploadFileDir);
+                    }
+                }
 awd
