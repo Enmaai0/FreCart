@@ -3,22 +3,28 @@ package icu.hao.haomall.requests;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
-public class AddProductRequest {
-    @NotNull(message = "Product name cannot be null")
+public class UpdateProductRequest {
+    @NotNull(message = "id cannot be empty")
+    private Integer id;
     private String name;
-    @NotNull(message = "Product image cannot be null")
     private String image;
     private String detail;
-    @NotNull(message = "Product category cannot be null")
     private Integer categoryId;
-    @NotNull(message = "Product price cannot be null")
     @Min(value = 1, message = "Product price must be greater than 1 cent")
     private Integer price;
-    @NotNull(message = "Product stock cannot be null")
     @Max(value = 10000, message = "Product stock must be less than 10000")
     private Integer stock;
     private Integer status;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

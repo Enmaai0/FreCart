@@ -2,11 +2,15 @@ package icu.hao.haomall.controller;
 
 import icu.hao.haomall.common.ApiRestResponse;
 import icu.hao.haomall.common.Constant;
+import icu.hao.haomall.model.pojo.Product;
 import icu.hao.haomall.requests.AddProductRequest;
+import icu.hao.haomall.requests.UpdateCategoryRequest;
+import icu.hao.haomall.requests.UpdateProductRequest;
 import icu.hao.haomall.service.ProductService;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,4 +62,19 @@ public class ProductAdminController {
         }
         return effectiveURI;
     }
+
+    @PostMapping("/admin/product/update")
+    public ApiRestResponse updateProduct(@RequestBody @Valid UpdateProductRequest updateProductRequest) {
+        Product product = new Product();
+        BeanUtils.copyProperties(updateProductRequest, product);
+        productService.update(product);
+        return ApiRestResponse.sucess();
+    }
+
+    @PostMapping("/admin/product/delete")
+    public ApiRestResponse deleteProduct(@RequestParam Integer id) {
+        productService.delete(id);
+        return ApiRestResponse.sucess();
+    }
+
 }
