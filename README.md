@@ -18,4 +18,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 }
 ```
-awd
+
+## 文件上传 API / File Upload API
+文件上传接口处理文件上传请求，并将文件保存到指定目录。成功上传后，返回包含文件 URL 的响应。
+
+The file upload endpoint handles the file upload request and saves the file to the specified directory. Upon successful upload, it returns a response containing the file URL.
+
+Endpoint
+* URL: /admin/upload/file
+* Method: POST
+* Parameters: MultipartFile file
