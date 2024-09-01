@@ -17,3 +17,4 @@
                 registry.addResourceHandler("/images/**").addResourceLocations("file:" + Constant.uploadFileDir);
             }
         }
+awd
